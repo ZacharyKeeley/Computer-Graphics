@@ -1,9 +1,9 @@
-#include <GL/glut.h>
+#include "GL/freeglut.h"
 #include <cmath>
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include <vecmath.h>
+#include "vecmath.h"
 using namespace std;
 
 // Globals
