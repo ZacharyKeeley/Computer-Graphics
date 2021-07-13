@@ -1,12 +1,45 @@
-#include "GL/freeglut.h"
+#include "include/GL/freeglut.h"
 #include <cmath>
 #include <iostream>
 #include <sstream>
 #include <vector>
 #include "vecmath.h"
+#include <unistd.h>
+#include <time.h>
 using namespace std;
 
 // Globals
+
+// Modified code
+// GLfloat *redPntr, *greenPntr, *bluePntr;
+GLfloat * generateColors(void)
+{
+
+    srand(time(NULL));
+    GLfloat red = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+    cout << 
+    // redPntr = &red;
+    srand(time(NULL));
+    GLfloat green = static_cast <float> (rand() / static_cast <float> (RAND_MAX));
+    // greenPntr = &green;
+    srand(time(NULL));
+    GLfloat blue = static_cast <float> (rand() / static_cast <float> (RAND_MAX));
+    // bluePntr = &blue;
+    GLfloat floatArray[4] = {red,green,blue,1.0f};
+    return floatArray;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 // This is the list of points (3D vectors)
 vector<Vector3f> vecv;
@@ -28,7 +61,6 @@ inline void glVertex(const Vector3f &a)
 
 inline void glNormal(const Vector3f &a) 
 { glNormal3fv(a); }
-
 
 // This function is called whenever a "Normal" key press is received.
 void keyboardFunc( unsigned char key, int x, int y )
@@ -99,13 +131,15 @@ void drawScene(void)
     // Set material properties of object
 
 	// Here are some colors you might use - feel free to add more
-    GLfloat diffColors[4][4] = { {0.5, 0.5, 0.9, 1.0},
+    GLfloat diffColors[4][4] = { {0.1, 0.1, 0.1, 1.0},
                                  {0.9, 0.5, 0.5, 1.0},
                                  {0.5, 0.9, 0.3, 1.0},
                                  {0.3, 0.8, 0.9, 1.0} };
     
 	// Here we use the first color entry as the diffuse color
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, diffColors[0]);
+
+    // GLfloat[4] = {red,green,blue, 1.0f};
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, generateColors());
 
 	// Define specular color and shininess
     GLfloat specColor[] = {1.0, 1.0, 1.0, 1.0};
