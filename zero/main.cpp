@@ -6,19 +6,19 @@
 #include "vecmath.h"
 #include <unistd.h>
 #include <time.h>
+#include <algorithm>
 using namespace std;
 
 // Globals
 
 // Modified code
-GLfloat * generateColors(void)
+GLfloat * generateColors(GLfloat *floatArray)
 {
     srand(time(NULL));
     GLfloat red = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
     GLfloat green = static_cast <float> (rand() / static_cast <float> (RAND_MAX));
     GLfloat blue = static_cast <float> (rand() / static_cast <float> (RAND_MAX));
     GLfloat fourthParameter = static_cast <float> (rand() / static_cast <float> (RAND_MAX));
-    GLfloat *floatArray = new GLfloat[4];
     floatArray[1] = red;
     floatArray[2] = green;
     floatArray[3] = blue;
@@ -27,8 +27,9 @@ GLfloat * generateColors(void)
 }
 
 
+GLfloat lightXposition = 1.0f, lightYposition = 1.0f;
 
-
+GLfloat *globalFloatArray = new GLfloat[4];
 
 
 
@@ -68,6 +69,7 @@ void keyboardFunc( unsigned char key, int x, int y )
         exit(0);
         break;
     case 'c':
+        generateColors(globalFloatArray);
         // add code to change color here
 		cout << "Unhandled key press " << key << "." << endl; 
         break;
@@ -86,18 +88,50 @@ void specialFunc( int key, int x, int y )
     switch ( key )
     {
     case GLUT_KEY_UP:
-        // add code to change light position
-		cout << "Unhandled key press: up arrow." << endl;
+        if (lightYposition <= 1.0f)
+        {
+            lightYposition += .05f;
+            clamp(lightYposition, 0.0, 1.0);
+            cout << "up arrow has been depressed. \n";
+        }
+        else
+        {
+            cout << "Unhandled key press: up arrow." << endl;
+        }
 		break;
     case GLUT_KEY_DOWN:
+        if (lightYposition >= 0.0f && lightYposition < 1.0f)
+        {
+            lightYposition -= .5f;
+        }
+        else
+        {
+            cout << "Unexpected float value: " << lightYposition << "\n";
+        }
         // add code to change light position
 		cout << "Unhandled key press: down arrow." << endl;
 		break;
     case GLUT_KEY_LEFT:
+        if (lightXposition >= 0.0f && lightXposition < 1.0f)
+        {
+            lightXposition -= .05f;
+        }
+        else
+        {
+            cout << "Unexpected float value:" << lightXposition << "\n";
+        }
         // add code to change light position
 		cout << "Unhandled key press: left arrow." << endl;
 		break;
     case GLUT_KEY_RIGHT:
+        if (lightXposition >= 0.0f && lightXposition < 1.0f)
+        {
+            lightXposition += .05f;
+        }
+        else
+        {
+            cout << "Unexpected float value:" << lightXposition << "\n"; ;
+        }
         // add code to change light position
 		cout << "Unhandled key press: right arrow." << endl;
 		break;
@@ -135,7 +169,7 @@ void drawScene(void)
     
 	// Here we use the first color entry as the diffuse color
 
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, generateColors());
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, globalFloatArray);
 
 	// Define specular color and shininess
     GLfloat specColor[] = {1.0, 1.0, 1.0, 1.0};
@@ -150,7 +184,9 @@ void drawScene(void)
     // Light color (RGBA)
     GLfloat Lt0diff[] = {1.0,1.0,1.0,1.0};
     // Light position
-	GLfloat Lt0pos[] = {1.0f, 1.0f, 5.0f, 1.0f};
+
+	GLfloat Lt0pos[] = {lightXposition, lightYposition, 5.0f, 1.0f};
+    cout << lightXposition << "\n" << lightYposition << "\n";
 
     glLightfv(GL_LIGHT0, GL_DIFFUSE, Lt0diff);
     glLightfv(GL_LIGHT0, GL_POSITION, Lt0pos);
