@@ -88,21 +88,22 @@ void specialFunc( int key, int x, int y )
     switch ( key )
     {
     case GLUT_KEY_UP:
-        if (lightYposition <= 1.0f)
+        if (lightYposition < 1.0f)
         {
-            lightYposition += .05f;
-            clamp(lightYposition, 0.0, 1.0);
+            lightYposition += .5f;
+            clamp(lightYposition, 0.0f, 1.0f);
             cout << "up arrow has been depressed. \n";
         }
         else
         {
-            cout << "Unhandled key press: up arrow." << endl;
+            cout << "Unexpected float value: " << lightYposition << endl;
         }
 		break;
     case GLUT_KEY_DOWN:
-        if (lightYposition >= 0.0f && lightYposition < 1.0f)
+        if (lightYposition > 0.0f)
         {
             lightYposition -= .5f;
+            clamp(lightYposition, 0.0f, 1.0f);
         }
         else
         {
@@ -112,21 +113,21 @@ void specialFunc( int key, int x, int y )
 		cout << "Unhandled key press: down arrow." << endl;
 		break;
     case GLUT_KEY_LEFT:
-        if (lightXposition >= 0.0f && lightXposition < 1.0f)
+        if (lightXposition > 0.0f)
         {
-            lightXposition -= .05f;
+            lightXposition -= .5f;
+            clamp(lightXposition, 0.0f, 1.0f);
         }
         else
         {
             cout << "Unexpected float value:" << lightXposition << "\n";
         }
-        // add code to change light position
-		cout << "Unhandled key press: left arrow." << endl;
 		break;
     case GLUT_KEY_RIGHT:
-        if (lightXposition >= 0.0f && lightXposition < 1.0f)
+        if (lightXposition < 1.0f)
         {
-            lightXposition += .05f;
+            lightXposition += .5f;
+            clamp(lightXposition, 0.0f, 1.0f);
         }
         else
         {

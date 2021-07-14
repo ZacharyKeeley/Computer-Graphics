@@ -1,4 +1,4 @@
-INCFLAGS  = -I /usr/include/GL
+INCFLAGS  = -std=c++17 -I /usr/include/GL
 #INCFLAGS += -I /mit/6.837/public/include/vecmath
 
 LINKFLAGS  = -lglut -lGL -lGLU
