@@ -11,29 +11,18 @@ using namespace std;
 // Globals
 
 // Modified code
-// GLfloat *redPntr, *greenPntr, *bluePntr;
 GLfloat * generateColors(void)
 {
-    cout << "2\n";
     srand(time(NULL));
     GLfloat red = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-    cout << "3\n";
-    // redPntr = &red;
-    srand(time(NULL));
     GLfloat green = static_cast <float> (rand() / static_cast <float> (RAND_MAX));
-    cout << "4\n";
-    // greenPntr = &green;
-    srand(time(NULL));
     GLfloat blue = static_cast <float> (rand() / static_cast <float> (RAND_MAX));
-    cout << "5\n";
-    // bluePntr = &blue;
-    cout << red << green << blue << "\n";
+    GLfloat fourthParameter = static_cast <float> (rand() / static_cast <float> (RAND_MAX));
     GLfloat *floatArray = new GLfloat[4];
     floatArray[1] = red;
     floatArray[2] = green;
     floatArray[3] = blue;
-    floatArray[4] = 1.0f;
-    cout << "6\n";
+    floatArray[4] = fourthParameter;
     return floatArray;
 }
 
@@ -146,10 +135,8 @@ void drawScene(void)
     
 	// Here we use the first color entry as the diffuse color
 
-    // GLfloat[4] = {red,green,blue, 1.0f};
-    cout << "1\n";
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, generateColors());
-    cout << "7\n";
+
 	// Define specular color and shininess
     GLfloat specColor[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat shininess[] = {100.0};
